@@ -1,7 +1,7 @@
 import customtkinter as CTk  # Импортируется под пользовательским названием CTk
 from PIL import Image
 import datetime
-import tomllib
+
 
 # Выставление параметров стиля окна
 CTk.set_appearance_mode("System")  # Тема окна
