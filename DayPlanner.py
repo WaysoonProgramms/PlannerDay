@@ -1,10 +1,11 @@
 import customtkinter as CTk  # Импортируется под пользовательским названием CTk
 from PIL import Image
 import datetime
+import tomllib
 
 # Выставление параметров стиля окна
 CTk.set_appearance_mode("System")  # Тема окна
-CTk.set_default_color_theme("blue")  # Стандартный цвет
+CTk.set_default_color_theme("dark-blue")  # Стандартный цвет
 
 
 # Функции
@@ -16,6 +17,7 @@ def note():  # Функция создания новой заметки
     create.geometry("430x280")
     create.title("Создать новую заметку...")
     create.iconbitmap("resources/images/icon.ico")
+    create.resizable(False, False)
 
     # Объявление заголовка для поля ввода заголовка заметки
     create.lable_name = CTk.CTkLabel(master=create, text="Заголовок:")
@@ -85,13 +87,15 @@ def take():  # Функция обработки и вывода заметки
     app.note_delete = CTk.CTkButton(master=app.note_frame, text="Удалить", width=10, command=delete)
     app.note_delete.place(x=300, y=40)
 
+    app.note_frame_old = app.note_frame
+
     create.destroy()  # Закрытие окна после создания
 
 def close():  # Функция закрытия окна создания заметки
     create.destroy()
 
 def delete():  # Функция удаления заметки
-    pass  # TODO Обработка удаления заметки
+    app.note_frame.destroy()
 
 # Основной класс приложения. Здесь производится изначальная сборка окна
 class App(CTk.CTk):
@@ -103,6 +107,7 @@ class App(CTk.CTk):
         self.geometry("430x630")
         self.title("DayPlanner")
         self.iconbitmap("resources/images/icon.ico")
+        self.resizable(False, False)
 
         # Объявление иконки для кнопки
         self.button_image = CTk.CTkImage(dark_image=Image.open("resources/images/plus.png"))
