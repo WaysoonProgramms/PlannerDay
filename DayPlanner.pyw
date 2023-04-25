@@ -125,3 +125,5 @@ class App(CTk.CTk):
 if __name__ == "__main__":
     app = App()  # Объявление объекта App
     app.mainloop()  # Сборка окна
+
+# @WaysoonPrograms 2023
