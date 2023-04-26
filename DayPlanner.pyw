@@ -1,6 +1,7 @@
 import customtkinter as CTk  # Импортируется под пользовательским названием CTk
 from PIL import Image
 import datetime
+import configparser
 
 
 # Выставление параметров стиля окна
@@ -63,9 +64,11 @@ def note():  # Функция создания новой заметки
     create.button_cancel = CTk.CTkButton(master=create, text="Отмена", command=close, width=200)
     create.button_cancel.place(x=220, y=230)
 
-    create.mainloop()  # Сборка окна
+    create.mainloop()
 
 def take():  # Функция обработки и вывода заметки
+
+    data = configparser.ConfigParser()
 
     # Объявление фрейма заметки
     app.note_frame = CTk.CTkFrame(master=app.scrollbarFrame, width=420, height=120)
@@ -87,7 +90,12 @@ def take():  # Функция обработки и вывода заметки
     app.note_delete = CTk.CTkButton(master=app.note_frame, text="Удалить", width=10, command=delete)
     app.note_delete.place(x=300, y=40)
 
-    app.note_frame_old = app.note_frame
+    data[create.entry_name.get()] = {"Name": create.entry_name.get(),
+                                     "Description": create.entry_description.get(),
+                                     "Date": create.combobox_time.get()}
+
+    with open('resources/saves/data.ini', 'w') as configfile:
+        data.write(configfile)
 
     create.destroy()  # Закрытие окна после создания
 
@@ -119,6 +127,11 @@ class App(CTk.CTk):
         # Объявления прокручевомаего фрейма
         self.scrollbarFrame = CTk.CTkScrollableFrame(master=self, width=390, height=560)
         self.scrollbarFrame.place(x=10, y=50)
+
+        self.data = configparser.ConfigParser()
+
+        with open('resources/saves/data.ini', 'r') as configfile:
+            self.data.read(configfile)
 
 
 # Запуск приложения в стандартном режиме
